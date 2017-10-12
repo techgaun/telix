@@ -1,18 +1,9 @@
 defmodule Telix do
   @moduledoc """
-  Documentation for Telix.
+  Telix is an Elixir client to talk with Telit's M2M Service API.
+
+  The goal of Telix is to be a full-blown SDK to access Telix's endpoints but the initial support only includes the [REST Api][m2m-telix].
+
+  [m2m-telix]: http://help.devicewise.com/display/ARG/REST+API
   """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Telix.hello
-      :world
-
-  """
-  def hello do
-    :world
-  end
 end
