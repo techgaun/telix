@@ -1,6 +1,6 @@
 defmodule Telix.Util do
   @moduledoc false
-  @base_url "https://api.devicewise.com"
+  @base_url "https://api.devicewise.com/api"
 
   def base_url do
     case config(:base_url) do

@@ -64,8 +64,8 @@ defmodule Telix.Api do
     do_request(:delete, path, params)
   end
 
-  defp do_request(method, path, params \\ %{}, req_body \\ "") do
-    uri = build_url(path, params)
+  defp do_request(method, _path, _params \\ %{}, req_body \\ "") do
+    uri = base_url()
     method
     |> HTTPoison.request(uri, req_body, req_header(), http_opts())
     |> Parser.parse()

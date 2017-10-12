@@ -21,11 +21,25 @@ defmodule Telix.Client do
 
   @spec login(t) :: t
   def login(client) do
-    case do_post "rest/auth", {:form, client.auth} do
-      {:ok, key} when is_binary(key) ->
-        %{client | session_key: key}
+    payload = %{
+      auth: %{
+        command: "api.authenticate",
+        params: client.auth
+      }
+    }
+
+    case do_post "", payload do
+      {:ok, %{"auth" => %{"params" => %{"sessionId" => session_key}}}} ->
+        %{client | session_key: session_key}
 
       _ -> client
     end
+    # rest/auth example
+    # case do_post "rest/auth", {:form, client.auth} do
+    #   {:ok, key} when is_binary(key) ->
+    #     %{client | session_key: key}
+    #
+    #   _ -> client
+    # end
   end
 end
