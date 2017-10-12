@@ -28,6 +28,7 @@ defmodule Telix.Mixfile do
   defp deps do
     [
       {:httpoison, "~> 0.13"},
+      {:poison, "~> 3.1"},
       {:ex_doc, "~> 0.17", only: :docs},
     ]
   end
