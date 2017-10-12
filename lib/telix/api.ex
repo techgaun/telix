@@ -25,6 +25,14 @@ defmodule Telix.Api do
     do_post(path, Enum.into(body, %{}))
   end
 
+  def do_post(path, {:form, map}) when is_map(map) do
+    do_post(path, {:form, Enum.into(map, [])})
+  end
+
+  def do_post(path, {:form, _} = body) do
+    do_request(:post, path, %{}, body)
+  end
+
   @doc false
   def do_post(path, body) do
     do_request(:post, path, %{}, Poison.encode!(body))

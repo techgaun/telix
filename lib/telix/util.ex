@@ -1,12 +1,12 @@
 defmodule Telix.Util do
   @moduledoc false
-  @base_url "https://api.devicewise.com/api"
+  @base_url "https://api.devicewise.com"
 
   def base_url do
     case config(:base_url) do
-      url when is_binary(url) -> url
+      url when is_binary(url) -> "#{url}"
 
-      _ -> @base_url
+      _ -> "#{@base_url}"
     end
   end
 
