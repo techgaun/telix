@@ -28,7 +28,7 @@ defmodule Telix.Client do
       }
     }
 
-    case do_post "", payload do
+    case do_post payload do
       {:ok, %{"auth" => %{"params" => %{"sessionId" => session_key}}}} ->
         %{client | session_key: session_key}
 

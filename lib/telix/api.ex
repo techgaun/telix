@@ -3,68 +3,32 @@ defmodule Telix.Api do
   alias Telix.Parser
   import Telix.Util
 
-  @doc false
-  def build_url(path, params) do
-    "#{base_url()}/#{path}?#{URI.encode_query(params)}"
-  end
+  def do_post(body, client \\ nil)
 
   @doc false
-  def do_get(path, params) when is_map(params) do
-    do_request(:get, path, params, "")
+  def do_post(body, client) when is_list(body) do
+    do_post(Enum.into(body, %{}), client)
   end
 
-  @doc false
-  def do_get(path, params) when is_list(params) do
-    do_get(path, Enum.into(params, %{}))
+  def do_post({:form, map}, client) when is_map(map) do
+    do_post({:form, Enum.into(map, [])}, client)
   end
 
-  def do_post(path, body \\ %{})
-
-  @doc false
-  def do_post(path, body) when is_list(body) do
-    do_post(path, Enum.into(body, %{}))
+  def do_post({:form, _} = body, _client) do
+    do_request(:post, body)
   end
 
-  def do_post(path, {:form, map}) when is_map(map) do
-    do_post(path, {:form, Enum.into(map, [])})
+  def do_post(body, client) do
+    body =
+      if is_nil(client) or is_nil(client.session_key) do
+        body
+      else
+        Map.put(body, "auth", %{"sessionId" => client.session_key})
+      end
+    do_request(:post, Poison.encode!(body))
   end
 
-  def do_post(path, {:form, _} = body) do
-    do_request(:post, path, %{}, body)
-  end
-
-  @doc false
-  def do_post(path, body) do
-    do_request(:post, path, %{}, Poison.encode!(body))
-  end
-
-  @doc false
-  def do_put(path, body \\ %{}) do
-    do_request(:put, path, %{}, Poison.encode!(body))
-  end
-
-  def do_patch(path, body \\ %{})
-
-  @doc false
-  def do_patch(path, body) when is_list(body) do
-    do_patch(path, Enum.into(body, %{}))
-  end
-  @doc false
-  def do_patch(path, body) do
-    do_request(:patch, path, %{}, Poison.encode!(body))
-  end
-
-  @doc false
-  def do_delete(path) do
-    do_request(:delete, path)
-  end
-
-  @doc false
-  def do_delete(path, params) do
-    do_request(:delete, path, params)
-  end
-
-  defp do_request(method, _path, _params \\ %{}, req_body \\ "") do
+  defp do_request(method, req_body) do
     uri = base_url()
     method
     |> HTTPoison.request(uri, req_body, req_header(), http_opts())
