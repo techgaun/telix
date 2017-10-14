@@ -5,40 +5,20 @@ defmodule Telix.Counter do
 
   [m2m-counter-svc]: http://help.devicewise.com/display/ARG/Counter+service
   """
-  import Telix.Api
+  use Telix.Endpoint
 
   def count(client, params) do
-    payload = %{
-      "1" => %{
-        "command" => "counter.count",
-        "params" => params
-      }
-    }
-
-    do_post payload, client
+    do_post build_payload("counter.count", params), client
   end
 
   def fields(client, type) when is_binary(type) do
     fields(client, %{"type" => type})
   end
   def fields(client, params) when is_map(params) do
-    payload = %{
-      "1" => %{
-        "command" => "counter.fields",
-        "params" => params
-      }
-    }
-
-    do_post payload, client
+    do_post build_payload("counter.fields", params), client
   end
 
   def types(client) do
-    payload = %{
-      "1" => %{
-        "command" => "counter.types"
-      }
-    }
-
-    do_post payload, client
+    do_post build_payload("counter.types"), client
   end
 end

@@ -1,6 +1,7 @@
 defmodule Telix.Client do
   alias Telix.Util
   import Telix.Api
+
   defstruct auth: nil, endpoint: Util.base_url(), session_key: nil
 
   @type auth :: %{username: binary, password: binary} | %{thingKey: binary, appToken: binary, appId: binary}

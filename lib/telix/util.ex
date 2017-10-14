@@ -16,4 +16,20 @@ defmodule Telix.Util do
   def req_header, do: [{"User-Agent", ua()}, {"Content-Type", "application/json"}]
 
   def config(key), do: Application.get_env(:telix, key)
+
+  def build_payload(cmd) do
+    %{
+      "1" => %{
+        "command" => cmd
+      }
+    }
+  end
+  def build_payload(cmd, params) do
+    %{
+      "1" => %{
+        "command" => cmd,
+        "params" => params
+      }
+    }
+  end
 end

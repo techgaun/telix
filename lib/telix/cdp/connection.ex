@@ -1,13 +1,11 @@
 defmodule Telix.CDP.Connection do
-  import Telix.Api
+  use Telix.Endpoint
+
+  def find(client, params) do
+    do_post build_payload("cdp.connection.find", params), client
+  end
 
   def health_summary(client) do
-    payload = %{
-      "1" => %{
-        "command" => "cdp.connection.health.summary"
-      }
-    }
-
-    do_post payload, client
+    do_post build_payload("cdp.connection.health.summary"), client
   end
 end
