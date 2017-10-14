@@ -7,7 +7,7 @@ defmodule Telix.Mixfile do
     [
       app: :telix,
       version: @version,
-      elixir: "~> 1.5",
+      elixir: "~> 1.4",
       start_permanent: Mix.env == :prod,
       deps: deps(),
       description: "Telit API Client For Elixir",
