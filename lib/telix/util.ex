@@ -5,7 +5,6 @@ defmodule Telix.Util do
   def base_url do
     case config(:base_url) do
       url when is_binary(url) -> "#{url}"
-
       _ -> "#{@base_url}"
     end
   end
@@ -24,6 +23,7 @@ defmodule Telix.Util do
       }
     }
   end
+
   def build_payload(cmd, params) do
     %{
       "1" => %{

@@ -8,17 +8,18 @@ defmodule Telix.Counter do
   use Telix.Endpoint
 
   def count(client, params) do
-    do_post build_payload("counter.count", params), client
+    do_post(build_payload("counter.count", params), client)
   end
 
   def fields(client, type) when is_binary(type) do
     fields(client, %{"type" => type})
   end
+
   def fields(client, params) when is_map(params) do
-    do_post build_payload("counter.fields", params), client
+    do_post(build_payload("counter.fields", params), client)
   end
 
   def types(client) do
-    do_post build_payload("counter.types"), client
+    do_post(build_payload("counter.types"), client)
   end
 end

@@ -25,11 +25,13 @@ defmodule Telix.Api do
       else
         Map.put(body, "auth", %{"sessionId" => client.session_key})
       end
+
     do_request(:post, Poison.encode!(body))
   end
 
   defp do_request(method, req_body) do
     uri = base_url()
+
     method
     |> HTTPoison.request(uri, req_body, req_header(), http_opts())
     |> Parser.parse()

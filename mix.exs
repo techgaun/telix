@@ -8,7 +8,7 @@ defmodule Telix.Mixfile do
       app: :telix,
       version: @version,
       elixir: "~> 1.4",
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: "Telit API Client For Elixir",
       name: "Telix",
@@ -29,7 +29,7 @@ defmodule Telix.Mixfile do
     [
       {:httpoison, "~> 0.13"},
       {:poison, "~> 3.1"},
-      {:ex_doc, "~> 0.17", only: :docs},
+      {:ex_doc, "~> 0.17", only: :docs}
     ]
   end
 

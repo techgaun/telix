@@ -4,7 +4,9 @@ defmodule Telix.Client do
 
   defstruct auth: nil, endpoint: Util.base_url(), session_key: nil
 
-  @type auth :: %{username: binary, password: binary} | %{thingKey: binary, appToken: binary, appId: binary}
+  @type auth ::
+          %{username: binary, password: binary}
+          | %{thingKey: binary, appToken: binary, appId: binary}
   @type t :: %__MODULE__{auth: auth, endpoint: binary, session_key: binary}
 
   @spec new() :: t
@@ -19,7 +21,6 @@ defmodule Telix.Client do
   @spec new(auth, binary) :: t
   def new(auth, endpoint), do: %__MODULE__{auth: auth, endpoint: endpoint}
 
-
   @spec login(t) :: t
   def login(client) do
     payload = %{
@@ -29,12 +30,14 @@ defmodule Telix.Client do
       }
     }
 
-    case do_post payload do
+    case do_post(payload) do
       {:ok, %{"auth" => %{"params" => %{"sessionId" => session_key}}}} ->
         %{client | session_key: session_key}
 
-      _ -> client
+      _ ->
+        client
     end
+
     # rest/auth example
     # case do_post "rest/auth", {:form, client.auth} do
     #   {:ok, key} when is_binary(key) ->
